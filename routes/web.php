@@ -34,3 +34,5 @@ Route::resource('/status', 'StatusController');
 Route::resource('/siswa', 'SiswaController');
 
 Route::resource('/role', 'RoleController');
+
+Route::resource('/soal', 'SoalController');

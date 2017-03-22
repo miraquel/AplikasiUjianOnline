@@ -61,6 +61,8 @@
                               <li><a href="{{ route('informasi.index') }}">Informasi</a></li>
                               <li><a href="{{ route('status.index') }}">Status</a></li>
                             </ul>
+                        </li>
+                        <li><a href="#">Manajemen Soal</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
