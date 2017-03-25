@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use illuminate\Html;
+use App\Ujian;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -13,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        return $this->middleware('auth');
     }
 
     /**
@@ -23,6 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $ujians = Ujian::all();
+        $now = Carbon::now();
+        $today = $now->toDateString();
+        $clock = $now->toTimeString();
+        return view('home', compact('ujians','today','clock'));
     }
 }

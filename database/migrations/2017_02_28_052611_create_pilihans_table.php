@@ -15,7 +15,9 @@ class CreatePilihansTable extends Migration
     {
         Schema::create('pilihans', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('soal_id')->unsigned();
             $table->string('deskripsi');
+            $table->boolean('benar');
             $table->timestamps();
         });
     }

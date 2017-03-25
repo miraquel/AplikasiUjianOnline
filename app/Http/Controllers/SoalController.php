@@ -11,7 +11,7 @@ class SoalController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
+      //
   }
   /**
    * Display a listing of the resource.
@@ -21,7 +21,7 @@ class SoalController extends Controller
   public function index()
   {
       $soals = Soal::all();
-      return view('soal.index', compact('soals'));
+      return view('manajemen_soal.soal.index', compact('soals'));
   }
 
   /**
@@ -31,7 +31,7 @@ class SoalController extends Controller
    */
   public function create()
   {
-      return view('soal.create');
+      return view('manajemen_soal.soal.create');
   }
 
   /**
@@ -43,7 +43,8 @@ class SoalController extends Controller
   public function store(Request $request)
   {
       Soal::create($request->all());
-      return redirect('/soal');
+      //$no = $request->input('ujian_id');
+      return redirect('ujian/'.$request->input('ujian_id').'/soal_pg');
   }
 
   /**
@@ -67,7 +68,7 @@ class SoalController extends Controller
   {
       $soals = Soal::findOrFail($id);
       //return $soal;
-      return view('soal.edit', compact('soals'));
+      return view('manajemen_soal.soal.edit', compact('soals'));
   }
 
   /**
@@ -81,7 +82,7 @@ class SoalController extends Controller
   {
       $soals = Soal::findOrFail($id);
       $soals->update($request->all());
-      return Redirect::route('soal.index');
+      return Redirect::route('manajemen_soal.soal.index');
   }
 
   /**
@@ -94,6 +95,6 @@ class SoalController extends Controller
   {
       $soals = Soal::findOrFail($id);
       $soals->delete();
-      return Redirect::route('soal.index');
+      return Redirect::route('manajemen_soal.soal.index');
   }
 }

@@ -5,16 +5,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Balai Latihan Kerja Industri</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
         <!-- Styles -->
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
+                background-image: url('{{ asset('images/'.rand(1,2).'Home-Background.jpg') }}');
+                background-size: cover;
+                background-position: center;
+                color: #ffffff;
+                text-shadow: 2px 2px rgba(0, 0, 0, 0.4);
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
@@ -47,10 +51,11 @@
 
             .title {
                 font-size: 84px;
+                text-shadow: 4px 2px rgba(0, 0, 0, 0.4);
             }
 
             .links > a {
-                color: #636b6f;
+                color: #ffffff;
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -78,16 +83,18 @@
             @endif
 
             <div class="content">
+                <div>
+                    <img src="{{ asset('images/BLKI-Provinsi-Banten.png') }}" style="height:250px">
+                </div>
                 <div class="title m-b-md">
-                    Laravel
+                    Balai Latihan Kerja Industri
+                    <br>
+                    <small>Provinsi Banten</small>
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="{{ url('/home') }}">Halaman Utama</a>
+                    <a href="#">Tentang</a>
                 </div>
             </div>
         </div>

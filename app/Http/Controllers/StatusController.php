@@ -11,7 +11,7 @@ class StatusController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
+      //
   }
   /**
    * Display a listing of the resource.
@@ -21,7 +21,7 @@ class StatusController extends Controller
   public function index()
   {
       $statuses = Status::all();
-      return view('status.index', compact('statuses'));
+      return view('filemaster.status.index', compact('statuses'));
   }
 
   /**
@@ -31,7 +31,7 @@ class StatusController extends Controller
    */
   public function create()
   {
-      return view('status.create');
+      return view('filemaster.status.create');
   }
 
   /**
@@ -67,7 +67,7 @@ class StatusController extends Controller
   {
       $statuses = Status::findOrFail($id);
       //return $status;
-      return view('status.edit', compact('statuses'));
+      return view('filemaster.status.edit', compact('statuses'));
   }
 
   /**
@@ -81,7 +81,7 @@ class StatusController extends Controller
   {
       $statuses = Status::findOrFail($id);
       $statuses->update($request->all());
-      return Redirect::route('status.index');
+      return Redirect::route('filemaster.status.index');
   }
 
   /**
@@ -94,6 +94,6 @@ class StatusController extends Controller
   {
       $statuses = Status::findOrFail($id);
       $statuses->delete();
-      return Redirect::route('status.index');
+      return Redirect::route('filemaster.status.index');
   }
 }

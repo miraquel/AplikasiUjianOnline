@@ -17,7 +17,7 @@ class SiswaController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
+      //
   }
   /**
    * Display a listing of the resource.
@@ -27,7 +27,7 @@ class SiswaController extends Controller
   public function index()
   {
       $siswas = Siswa::all();
-      return view('siswa.index', compact('siswas'));
+      return view('filemaster.siswa.index', compact('siswas'));
   }
 
   /**
@@ -43,7 +43,7 @@ class SiswaController extends Controller
       $informasis = Informasi::all();
       $pekerjaans = Pekerjaan::all();
       $pendidikans = Pendidikan::all();
-      return view('siswa.create', compact('kejuruans', 'agamas', 'statuses', 'informasis', 'pekerjaans', 'pendidikans'));
+      return view('filemaster.siswa.create', compact('kejuruans', 'agamas', 'statuses', 'informasis', 'pekerjaans', 'pendidikans'));
   }
 
   /**
@@ -67,7 +67,7 @@ class SiswaController extends Controller
   public function show($id)
   {
       $siswas = Siswa::findOrFail($id);
-      return view('siswa.show', compact('siswas'));
+      return view('filemaster.siswa.show', compact('siswas'));
   }
 
   /**
@@ -85,7 +85,7 @@ class SiswaController extends Controller
     $informasis = Informasi::all();
     $pekerjaans = Pekerjaan::all();
     $pendidikans = Pendidikan::all();
-    return view('siswa.create', compact('siswas','kejuruans', 'agamas', 'statuses', 'informasis', 'pekerjaans', 'pendidikans'));
+    return view('filemaster.siswa.create', compact('siswas','kejuruans', 'agamas', 'statuses', 'informasis', 'pekerjaans', 'pendidikans'));
   }
 
   /**
@@ -99,7 +99,7 @@ class SiswaController extends Controller
   {
       $siswas = Siswa::findOrFail($id);
       $siswas->update($request->all());
-      return Redirect::route('siswa.index');
+      return Redirect::route('filemaster.siswa.index');
   }
 
   /**
@@ -112,6 +112,6 @@ class SiswaController extends Controller
   {
       $siswas = Siswa::findOrFail($id);
       $siswas->delete();
-      return Redirect::route('siswa.index');
+      return Redirect::route('filemaster.siswa.index');
   }
 }

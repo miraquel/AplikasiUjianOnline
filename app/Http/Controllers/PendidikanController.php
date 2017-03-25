@@ -11,7 +11,7 @@ class PendidikanController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
+      //
   }
   /**
    * Display a listing of the resource.
@@ -21,7 +21,7 @@ class PendidikanController extends Controller
   public function index()
   {
       $pendidikans = Pendidikan::all();
-      return view('pendidikan.index', compact('pendidikans'));
+      return view('filemaster.pendidikan.index', compact('pendidikans'));
   }
 
   /**
@@ -31,7 +31,7 @@ class PendidikanController extends Controller
    */
   public function create()
   {
-      return view('pendidikan.create');
+      return view('filemaster.pendidikan.create');
   }
 
   /**
@@ -67,7 +67,7 @@ class PendidikanController extends Controller
   {
       $pendidikans = Pendidikan::findOrFail($id);
       //return $pendidikan;
-      return view('pendidikan.edit', compact('pendidikans'));
+      return view('filemaster.pendidikan.edit', compact('pendidikans'));
   }
 
   /**
@@ -81,7 +81,7 @@ class PendidikanController extends Controller
   {
       $pendidikans = Pendidikan::findOrFail($id);
       $pendidikans->update($request->all());
-      return Redirect::route('pendidikan.index');
+      return Redirect::route('filemaster.pendidikan.index');
   }
 
   /**
@@ -94,6 +94,6 @@ class PendidikanController extends Controller
   {
       $pendidikans = Pendidikan::findOrFail($id);
       $pendidikans->delete();
-      return Redirect::route('pendidikan.index');
+      return Redirect::route('filemaster.pendidikan.index');
   }
 }

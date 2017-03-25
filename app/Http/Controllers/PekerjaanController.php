@@ -11,7 +11,7 @@ class PekerjaanController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class PekerjaanController extends Controller
     public function index()
     {
         $pekerjaans = Pekerjaan::all();
-        return view('pekerjaan.index', compact('pekerjaans'));
+        return view('filemaster.pekerjaan.index', compact('pekerjaans'));
     }
 
     /**
@@ -31,7 +31,7 @@ class PekerjaanController extends Controller
      */
     public function create()
     {
-        return view('pekerjaan.create');
+        return view('filemaster.pekerjaan.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class PekerjaanController extends Controller
     {
         $pekerjaans = Pekerjaan::findOrFail($id);
         //return $pekerjaan;
-        return view('pekerjaan.edit', compact('pekerjaans'));
+        return view('filemaster.pekerjaan.edit', compact('pekerjaans'));
     }
 
     /**
@@ -81,7 +81,7 @@ class PekerjaanController extends Controller
     {
         $pekerjaans = Pekerjaan::findOrFail($id);
         $pekerjaans->update($request->all());
-        return Redirect::route('pekerjaan.index');
+        return Redirect::route('filemaster.pekerjaan.index');
     }
 
     /**
@@ -94,6 +94,6 @@ class PekerjaanController extends Controller
     {
         $pekerjaans = Pekerjaan::findOrFail($id);
         $pekerjaans->delete();
-        return Redirect::route('pekerjaan.index');
+        return Redirect::route('filemaster.pekerjaan.index');
     }
 }

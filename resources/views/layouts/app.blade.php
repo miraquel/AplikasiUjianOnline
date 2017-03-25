@@ -8,12 +8,19 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <img src="" alt="">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}@yield('titlepage')</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
 
+    <style media="screen">
+        html, body {
+            background-image: url('{{ asset('images/'.rand(1,4).'Home-Background.jpg') }}');
+        }
+    </style>
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -46,35 +53,55 @@
                     <ul class="nav navbar-nav">
                         &nbsp;
                         <li><a href="{{ url('/home') }}">Halaman Utama</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Data Master
-                                <span class="caret"></span>
-                            </a>
+                        @if (Auth::check() && (Auth::user()->roles->name == 'Administrator' || Auth::user()->roles->name == 'Instruktur'))
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                  Data Master
+                                  <span class="caret"></span>
+                              </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                              <li><a href="{{ route('siswa.index') }}">Siswa</a></li>
-                              <li><a href="{{ route('agama.index') }}">Agama</a></li>
-                              <li><a href="{{ route('pekerjaan.index') }}">Pekerjaan</a></li>
-                              <li><a href="{{ route('pendidikan.index') }}">Pendidikan</a></li>
-                              <li><a href="{{ route('kejuruan.index') }}">Kejuruan</a></li>
-                              <li><a href="{{ route('informasi.index') }}">Informasi</a></li>
-                              <li><a href="{{ route('status.index') }}">Status</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Manajemen Soal</a></li>
+                              <ul class="dropdown-menu" role="menu">
+                                @if (Auth::check() && Auth::user()->roles->name == 'Administrator')
+                                    <li><a href="{{ route('user.index') }}">@fa( user ) User</a></li>
+                                    <li><a href="{{ route('role.index') }}">@fa( key ) Role</a></li>
+                                @endif
+                                <li><a href="{{ route('siswa.index') }}">@fa( address-book ) Siswa</a></li>
+                                <li><a href="{{ route('agama.index') }}">@fa( institution ) Agama</a></li>
+                                <li><a href="{{ route('pekerjaan.index') }}">@fa( briefcase ) Pekerjaan</a></li>
+                                <li><a href="{{ route('pendidikan.index') }}">@fa( graduation-cap ) Pendidikan</a></li>
+                                <li><a href="{{ route('kejuruan.index') }}">@fa( group ) Kejuruan</a></li>
+                                <li><a href="{{ route('informasi.index') }}">@fa( info ) Informasi</a></li>
+                                <li><a href="{{ route('status.index') }}">@fa( venus-mars ) Status</a></li>
+                              </ul>
+                          </li>
+                        @endif
+
+                        @if (Auth::check() && (Auth::user()->roles->name == 'Administrator' || Auth::user()->roles->name == 'Instruktur'))
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                  Manajemen Soal
+                                  <span class="caret"></span>
+                              </a>
+                              <ul class="dropdown-menu" role="menu">
+                                  <li><a href="{{ route('ujian.index') }}">@fa(file-text) Ujian</a></li>
+                                  <li><a href="{{ route('soal.index') }}">@fa(pencil) Soal Pilihan Ganda</a></li>
+                                  <li><a href="{{ route('soal_essay.index') }}">@fa(comment) Soal Essay</a></li>
+                                  <li><a href="{{ route('jawaban.index') }}">@fa(check) Jawaban Pilihan Ganda</a></li>
+                              </ul>
+                          </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ route('login') }}">@fa(sign-in) Login</a></li>
+                            <li><a href="{{ route('register') }}">@fa(user) Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }} - {{Auth::user()->roles->name}} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -102,5 +129,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.2.0.min.js') }}"></script>
+    <script src="{{ asset('jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+    @yield('js')
 </body>
 </html>

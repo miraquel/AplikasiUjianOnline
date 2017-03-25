@@ -11,8 +11,13 @@ class Kejuruan extends Model
   ];
 
   //One to Many Relationship with Siswa's Table
-  public function siswa()
+  public function siswas()
   {
       return $this->hasMany('App\Siswa', 'kejuruan_id');
+  }
+
+  public function ujians()
+  {
+      return $this->hasMany('App\Ujian', 'id');
   }
 }

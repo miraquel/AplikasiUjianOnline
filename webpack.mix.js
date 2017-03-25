@@ -12,4 +12,6 @@ const { mix } = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+   .js('resources/assets/angular/angular-compiled.js', 'public/js')
+   .js('public/angular/ngLibs.js', 'public/angular/app/ngLibs.js')
    .sass('resources/assets/sass/app.scss', 'public/css');

@@ -1,3 +1,83 @@
 .box-button {
   display: inline-block;
 }
+
+
+/* change background image and text color */
+body {
+  background-image: url('../images/Home-Background.jpg');
+  color: #ffffff;
+}
+
+/* change panel-heading text color */
+.panel-default>.panel-heading {
+  color: #333;
+}
+
+/* change panel text color */
+.panel {
+  color: #636b6f;
+}
+
+/* change navbar background color */
+.navbar-default {
+    background-color: transparent;
+}
+
+/* change navbar menu text color */
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-text {
+    color: #d2d2d2;
+}
+
+/* change navbar menu text color (hover) */
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #ffffff;
+}
+
+/* change navbar-brand text color (hover) */
+.navbar-default .navbar-brand {
+    color: #d2d2d2;
+}
+
+/* change navbar-brand text color (hover) */
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #ffffff;
+}
+
+/*change navbar dropdown button color when clicked */
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+.dropdown-menu {
+    background-color: rgba(255, 255, 255, 0.74);
+}
+
+.dropdown-menu>li>a {
+    color: #000;
+}
+
+.panel{
+    margin-top: 10px;
+}
+
+.list-jawaban{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left:inherit;
+}
+
+ol,ul{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left:30px;
+}
+
+.no-break-line{
+    white-space: nowrap;
+}
+
+.table > tbody > tr.active td {
+  background-color:#aad0f7;
+}

@@ -18,6 +18,7 @@ class Siswa extends Model
         'tempat_lahir',
         'tanggal_lahir',
         'asal_sekolah',
+        'user_id',
     ];
 
     //One to Many Relationship with agama's table
@@ -53,5 +54,15 @@ class Siswa extends Model
     public function pekerjaans()
     {
         return $this->belongsTo('App\Pekerjaan', 'pekerjaan_id');
+    }
+
+    public function jawabans()
+    {
+        return $this->hasMany('App\Jawaban', 'siswa_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo('App\User', 'user_id');
     }
 }

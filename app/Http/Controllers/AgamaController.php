@@ -11,7 +11,7 @@ class AgamaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //
     }
 
     /**
@@ -23,7 +23,7 @@ class AgamaController extends Controller
     {
         $agamas = Agama::all();
         //return $agamas;
-        return view('agama.index', compact('agamas'));
+        return view('filemaster.agama.index', compact('agamas'));
     }
 
     /**
@@ -33,7 +33,7 @@ class AgamaController extends Controller
      */
     public function create()
     {
-        return view('agama.create');
+        return view('filemaster.agama.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class AgamaController extends Controller
     public function edit($id)
     {
         $agamas = Agama::findOrFail($id);
-        return view('agama.edit', compact('agamas'));
+        return view('filemaster.agama.edit', compact('agamas'));
     }
 
     /**
@@ -81,7 +81,7 @@ class AgamaController extends Controller
     {
       $agamas = Agama::findOrFail($id);
       $agamas->update($request->all());
-      return Redirect::route('agama.index');
+      return Redirect::route('filemaster.agama.index');
     }
 
     /**
@@ -94,6 +94,6 @@ class AgamaController extends Controller
     {
       $agamas = Agama::findOrFail($id);
       $agamas->delete();
-      return Redirect::route('agama.index');
+      return Redirect::route('filemaster.agama.index');
     }
 }

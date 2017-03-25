@@ -11,7 +11,7 @@ class InformasiController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
+      //
   }
   /**
    * Display a listing of the resource.
@@ -21,7 +21,7 @@ class InformasiController extends Controller
   public function index()
   {
       $informasis = Informasi::all();
-      return view('informasi.index', compact('informasis'));
+      return view('filemaster.informasi.index', compact('informasis'));
   }
 
   /**
@@ -31,7 +31,7 @@ class InformasiController extends Controller
    */
   public function create()
   {
-      return view('informasi.create');
+      return view('filemaster.informasi.create');
   }
 
   /**
@@ -67,7 +67,7 @@ class InformasiController extends Controller
   {
       $informasis = Informasi::findOrFail($id);
       //return $informasi;
-      return view('informasi.edit', compact('informasis'));
+      return view('filemaster.informasi.edit', compact('informasis'));
   }
 
   /**
@@ -81,7 +81,7 @@ class InformasiController extends Controller
   {
       $informasis = Informasi::findOrFail($id);
       $informasis->update($request->all());
-      return Redirect::route('informasi.index');
+      return Redirect::route('filemaster.informasi.index');
   }
 
   /**
@@ -94,6 +94,6 @@ class InformasiController extends Controller
   {
       $informasis = Informasi::findOrFail($id);
       $informasis->delete();
-      return Redirect::route('informasi.index');
+      return Redirect::route('filemaster.informasi.index');
   }
 }

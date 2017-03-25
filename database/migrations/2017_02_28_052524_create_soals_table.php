@@ -15,8 +15,8 @@ class CreateSoalsTable extends Migration
     {
         Schema::create('soals', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('ujian_id')->unsigned();
             $table->string('deskripsi');
-            $table->time('waktu_ujian');
             $table->timestamps();
         });
     }

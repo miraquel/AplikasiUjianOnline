@@ -21,6 +21,7 @@ class CreateSiswasTable extends Migration
             $table->integer('pekerjaan_id')->unsigned();
             $table->integer('status_id')->unsigned();
             $table->integer('informasi_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->string('nama');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');

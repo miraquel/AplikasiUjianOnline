@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('titlepage')
+    - Register
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -60,13 +64,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Role</label>
+                        <div class="form-group" hidden>
+                            <label for="role_id" class="col-md-4 control-label">Role</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="role_id">
-                                    
-                                </select>
+                                <input id="role_id" type="text" class="form-control" name="role_id" value="4">
                             </div>
                         </div>
 

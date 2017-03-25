@@ -15,9 +15,9 @@ class CreateJawabansTable extends Migration
     {
         Schema::create('jawabans', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_user');
-            $table->integer('id_soal_pilihan');
-            $table->timestamps();
+            $table->integer('siswa_id')->unsigned();
+            $table->integer('pilihan_id')->unsigned();
+            $table->timestamp('jam');
         });
     }
 

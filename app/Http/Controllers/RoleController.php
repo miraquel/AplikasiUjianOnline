@@ -9,7 +9,7 @@ class RoleController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
+      //
   }
   /**
    * Display a listing of the resource.
@@ -19,7 +19,7 @@ class RoleController extends Controller
   public function index()
   {
       $roles = Role::all();
-      return view('role.index', compact('roles'));
+      return view('filemaster.role.index', compact('roles'));
   }
 
   /**
@@ -29,7 +29,7 @@ class RoleController extends Controller
    */
   public function create()
   {
-      return view('role.create');
+      return view('filemaster.role.create');
   }
 
   /**
@@ -65,7 +65,7 @@ class RoleController extends Controller
   {
       $roles = Role::findOrFail($id);
       //return $role;
-      return view('role.edit', compact('roles'));
+      return view('filemaster.role.edit', compact('roles'));
   }
 
   /**
@@ -79,7 +79,7 @@ class RoleController extends Controller
   {
       $roles = Role::findOrFail($id);
       $roles->update($request->all());
-      return Redirect::route('role.index');
+      return Redirect::route('filemaster.role.index');
   }
 
   /**
@@ -92,6 +92,6 @@ class RoleController extends Controller
   {
       $roles = Role::findOrFail($id);
       $roles->delete();
-      return Redirect::route('role.index');
+      return Redirect::route('filemaster.role.index');
   }
 }

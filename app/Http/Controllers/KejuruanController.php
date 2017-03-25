@@ -11,7 +11,7 @@ class KejuruanController extends Controller
 {
   public function __construct()
   {
-      $this->middleware('auth');
+      //
   }
   /**
    * Display a listing of the resource.
@@ -21,7 +21,7 @@ class KejuruanController extends Controller
   public function index()
   {
       $kejuruans = Kejuruan::all();
-      return view('kejuruan.index', compact('kejuruans'));
+      return view('filemaster.kejuruan.index', compact('kejuruans'));
   }
 
   /**
@@ -31,7 +31,7 @@ class KejuruanController extends Controller
    */
   public function create()
   {
-      return view('kejuruan.create');
+      return view('filemaster.kejuruan.create');
   }
 
   /**
@@ -67,7 +67,7 @@ class KejuruanController extends Controller
   {
       $kejuruans = Kejuruan::findOrFail($id);
       //return $kejuruan;
-      return view('kejuruan.edit', compact('kejuruans'));
+      return view('filemaster.kejuruan.edit', compact('kejuruans'));
   }
 
   /**
@@ -81,7 +81,7 @@ class KejuruanController extends Controller
   {
       $kejuruans = Kejuruan::findOrFail($id);
       $kejuruans->update($request->all());
-      return Redirect::route('kejuruan.index');
+      return Redirect::route('filemaster.kejuruan.index');
   }
 
   /**
@@ -94,6 +94,6 @@ class KejuruanController extends Controller
   {
       $kejuruans = Kejuruan::findOrFail($id);
       $kejuruans->delete();
-      return Redirect::route('kejuruan.index');
+      return Redirect::route('filemaster.kejuruan.index');
   }
 }
