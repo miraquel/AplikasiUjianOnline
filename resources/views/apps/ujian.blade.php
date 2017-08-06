@@ -48,7 +48,6 @@
                     <th>Nama Ujian</th>
                     <th>Tanggal Mulai</th>
                     <th>Tanggal Selesai</th>
-                    <th>Durasi</th>
                   </thead>
                   <tbody id="body-ujian">
                   </tbody>
@@ -73,12 +72,7 @@
 
       <div id="exam-panel" class="panel panel-primary" hidden>
         <div class="panel-heading">
-<<<<<<< HEAD
-          Ujian Dimulai, Selamat Mengerjakan
-=======
           Ujian Dimulai
-          <label class="pull-right">Test</label>
->>>>>>> b07d4dafc0e8fea944124be9d5c1ae343b4911be
         </div>
         <div id="exam-panel-body" class="panel-body">
 
@@ -87,21 +81,12 @@
           <button class="btn btn-success" type="button" name="button">Button Kirim</button>
         </div>
       </div>
-      <div id="timer-navbar" class="navbar navbar-inverse navbar-fixed-bottom" hidden>
-        <div class="container">
-          <div class="navbar-text">
-            <label class="clock pull-left" style="font-size:20pt;color:#ffffff;"></label>
-          </div>
-          <button type="button" style="font-size:20pt;" class="navbar-btn btn-success btn pull-right">Selesai</button>
-        </div>
-      </div>
   </div>
 @endsection
 
 @section('js')
   <script type="text/javascript">
     $(document).ready(function(){
-      moment.locale('id');
       var siswaCurrentId;
       var siswaCurrentBirthDate;
       var ujian;
@@ -109,14 +94,6 @@
       var pilihan;
 
       var ujianSelected;
-      var durasiUjian;
-
-      function update() {
-        if (durasiUjian > 0) {
-          durasiUjian = moment.duration(durasiUjian - 10, 'milliseconds');
-          $("#timer-navbar .clock").text("Waktu Tersisa : "+durasiUjian.hours()+":"+durasiUjian.minutes()+":"+durasiUjian.seconds()+":"+durasiUjian.milliseconds());
-        }
-      }
 
       var siswa = (function () {
         var siswa = null;
@@ -138,7 +115,7 @@
           $.ajax({
             'async': false,
             'global': false,
-            'url': 'http://localhost:8000/api/ujian/'+kejuruan_id+'/kejuruan',
+            'url': 'http://localhost:8000/api/ujian/'+kejuruan_id+'/siswa',
             'dataType': "json",
             'success': function (data) {
               ujian = data;
@@ -154,7 +131,7 @@
           $.ajax({
             'async': false,
             'global': false,
-            'url': 'http://localhost:8000/api/soal/'+ujian_id+'/kejuruan',
+            'url': 'http://localhost:8000/api/soal/'+ujian_id+'/ujian',
             'dataType': "json",
             'success': function (data) {
               soal = data;
@@ -163,6 +140,22 @@
           return soal;
         })();
       }
+
+      // function getJawabanSoal(soal_id) {
+      //   jawaban = (function () {
+      //     var jawaban = null;
+      //     $.ajax({
+      //       'async': false,
+      //       'global': false,
+      //       'url': 'http://localhost:8000/api/jawaban/'+soal_id+'/soal',
+      //       'dataType': "json",
+      //       'success': function (data) {
+      //         jawaban = data;
+      //       }
+      //     });
+      //     return jawaban;
+      //   })();
+      // }
 
       function getPilihanSoal(soal_id) {
         pilihan = (function () {
@@ -186,7 +179,7 @@
           $('.div-verification').hide(1000);
           getUjianSiswa(siswaCurrentMajor);
           $.each(ujian, function(key, val){
-            $('#table-ujian > tbody').append('<tr class="tr-ujian"><td class="td-ujian-id" hidden>'+val.id+'</td><td class="td-ujian-deskripsi">'+val.deskripsi+'</td><td class="td-ujian-tanggal-mulai">'+val.tanggal_mulai+'</td><td class="td-ujian-tanggal-selesai">'+val.tanggal_selesai+'</td><td>'+moment.duration(val.durasi).hours()+' Jam '+moment.duration(val.durasi).minutes()+' Menit '+moment.duration(val.durasi).seconds()+' Detik </td>'+'<td class="td-ujian-durasi" hidden>'+val.durasi+'</td></tr>');
+            $('#table-ujian > tbody').append('<tr class="tr-ujian"><td class="td-ujian-id" hidden>'+val.id+'</id><td class="td-ujian-deskripsi">'+val.deskripsi+'</td><td class="td-ujian-tanggal-mulai">'+val.tanggal_mulai+'</td><td class="td-ujian-tanggal-selesai">'+val.tanggal_selesai+'</td></tr>');
           });
           $('#div-ujian').show(1000);
           console.log(ujian);
@@ -208,7 +201,6 @@
       $('#body-ujian').on("click", ".tr-ujian", function() {
         $(this).addClass("active");
         ujianSelected = $(this).find(".td-ujian-id").text();
-        durasiUjian = $(this).find(".td-ujian-durasi").text();
         if ($('#click-start').prop('disabled')) {
           $('#click-start').prop('disabled', false);
         }
@@ -219,7 +211,7 @@
         // console.log(siswaCurrentBirthDate);
       });
 
-      function postJawabanSiswa(siswa_id, pilihan_id, soal_id) {
+      function postJawabanSiswa(siswa_id, pilihan_id) {
         // console.log('siswa_id = '+siswa_id);
         // console.log('pilihan_id = '+pilihan_id);
         $.ajax({
@@ -230,8 +222,7 @@
           data: {
             _token: $('meta[name="csrf-token"]').attr('content'),
             siswa_id: siswa_id,
-            pilihan_id: pilihan_id,
-            soal_id: soal_id
+            pilihan_id: pilihan_id
           },
           type: "POST",
           dataType: "json",
@@ -245,10 +236,9 @@
       }
 
       $('#exam-panel-body').on("click", ".pilihan", function() {
-        console.log("pilihan_id : "+$(this).val());
-        // console.log($('meta[name="csrf-token"]').attr('content'));
-        console.log("soal_id : "+$(this).data('soal'));
-        postJawabanSiswa(siswaCurrentId, $(this).val(), $(this).data('soal'));
+        console.log($(this).val());
+        console.log($('meta[name="csrf-token"]').attr('content'));
+        postJawabanSiswa(siswaCurrentId, $(this).val());
       });
 
       $('#search-siswa-input').keyup(function(){
@@ -264,9 +254,9 @@
 
       $('#click-start').click(function() {
         $('#verification-panel').hide(1000, startExam(ujianSelected));
-        setInterval(update, 10);
-        $('#timer-navbar').show(1000);
       });
+
+      $('#exam-panel-body .panel .panel-body').on('')
 
       function startExam(id) {
         console.log(id);
@@ -284,7 +274,7 @@
           getPilihanSoal(_soal.id);
           $.each(pilihan, function(key, _pilihan) {
             $("#soal-"+_soal.id+" .panel-body").append(
-              '<div class="radio"><label><input type="radio" class="pilihan" data-soal="'+_soal.id+'" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
+              '<div class="radio"><label><input type="radio" class="pilihan" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
             );
           });
         });

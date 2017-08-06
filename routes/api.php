@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/ujian', 'api\UjianController@index');
 Route::get('/soal/{id}/ujian', 'api\SoalController@getSoalUjian');
-Route::get('/ujian/{id}/kejuruan', 'api\UjianController@getUjianKejuruan');
+Route::get('/ujian/{id}/siswa', 'api\UjianController@getUjianSiswa');
 Route::get('/pilihan/{id}/soal', 'api\PilihanController@getPilihanSoal');
 Route::get('/siswa', 'api\SiswaController@index');
 

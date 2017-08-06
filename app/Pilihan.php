@@ -17,8 +17,8 @@ class Pilihan extends Model
         return $this->belongsTo('App\Soal', 'soal_id');
     }
 
-    public function siswas()
+    public function jawaban()
     {
-        return $this->belongsToMany('App\Siswa')->withTimestamps();
+        return $this->hasMany('App\Jawaban', 'pilihan_id');
     }
 }
