@@ -85,7 +85,7 @@
       <div id="timer-navbar" class="navbar navbar-inverse navbar-fixed-bottom" hidden>
         <div class="container">
           <div class="navbar-text">
-            <label class="clock pull-left" style="font-size:20pt;color:#ffffff;"></label>
+            <label class="clock" style="font-size:20pt;color:#ffffff;"></label>
           </div>
           <button type="button" style="font-size:20pt;" class="navbar-btn btn-success btn pull-right">Selesai</button>
         </div>
