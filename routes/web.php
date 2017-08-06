@@ -34,6 +34,7 @@ Route::group(['middleware' => ['instruktur', 'auth']], function()
     Route::resource('/soal_essay', 'SoalEssayController');
     Route::resource('/jawaban', 'JawabanController');
     Route::resource('/pilihan', 'PilihanController');
+    Route::get('/apps/ujian', 'AppsController@index');
 });
 
 Route::group(['middleware' => ['admin', 'auth']], function()
@@ -41,5 +42,3 @@ Route::group(['middleware' => ['admin', 'auth']], function()
     Route::resource('/user', 'UserController');
     Route::resource('/role', 'RoleController');
 });
-
-Route::get('/apps/ujian', 'AppsController@index');
