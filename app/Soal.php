@@ -21,9 +21,4 @@ class Soal extends Model
     {
         return $this->hasMany('App\Pilihan', 'soal_id');
     }
-
-    public function jawabans()
-    {
-        return $this->hasManyThrough('App\Jawaban', 'App\Pilihan');
-    }
 }
