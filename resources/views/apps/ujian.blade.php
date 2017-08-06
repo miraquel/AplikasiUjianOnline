@@ -73,7 +73,12 @@
 
       <div id="exam-panel" class="panel panel-primary" hidden>
         <div class="panel-heading">
+<<<<<<< HEAD
           Ujian Dimulai, Selamat Mengerjakan
+=======
+          Ujian Dimulai
+          <label class="pull-right">Test</label>
+>>>>>>> b07d4dafc0e8fea944124be9d5c1ae343b4911be
         </div>
         <div id="exam-panel-body" class="panel-body">
 
@@ -149,7 +154,7 @@
           $.ajax({
             'async': false,
             'global': false,
-            'url': 'http://localhost:8000/api/soal/'+ujian_id+'/ujian',
+            'url': 'http://localhost:8000/api/soal/'+ujian_id+'/kejuruan',
             'dataType': "json",
             'success': function (data) {
               soal = data;
