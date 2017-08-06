@@ -13,4 +13,10 @@ class SiswaController extends Controller
     {
         return Siswa::orderBy('nama', 'asc')->get();
     }
+
+    public function getSiswaPilihan($id)
+    {
+        $siswa = Siswa::find($id);
+        return $siswaPilihan = $siswa->pilihans;
+    }
 }

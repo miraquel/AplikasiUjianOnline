@@ -72,13 +72,21 @@
 
       <div id="exam-panel" class="panel panel-primary" hidden>
         <div class="panel-heading">
-          Ujian Dimulai
+          Ujian Dimulai, Selamat Mengerjakan
         </div>
         <div id="exam-panel-body" class="panel-body">
 
         </div>
         <div class="panel-footer">
           <button class="btn btn-success" type="button" name="button">Button Kirim</button>
+        </div>
+      </div>
+      <div id="timer-navbar" class="navbar navbar-inverse navbar-fixed-bottom" hidden>
+        <div class="container">
+          <div class="navbar-text">
+            <label class="clock" style="font-size:20pt;color:#ffffff;"></label>
+          </div>
+          <button type="button" style="font-size:20pt;" class="navbar-btn btn-success btn pull-right">Selesai</button>
         </div>
       </div>
   </div>
@@ -93,7 +101,15 @@
       var soal;
       var pilihan;
 
+      var siswaPilihan;
+
       var ujianSelected;
+
+      function loadExistingAnswer() {
+        $.each(siswaPilihan, function(key, val){
+          $("#pilihan-"+val.id).prop('checked', true);
+        });
+      }
 
       var siswa = (function () {
         var siswa = null;
@@ -108,6 +124,22 @@
         });
         return siswa;
       })();
+
+      function getSiswaPilihan(siswa_id) {
+        siswaPilihan = (function () {
+          var siswaPilihan = null;
+          $.ajax({
+            'async': false,
+            'global': false,
+            'url': 'http://localhost:8000/api/siswa/'+siswa_id+'/pilihan',
+            'dataType': "json",
+            'success': function (data) {
+              siswaPilihan = data;
+            }
+          });
+          return siswaPilihan;
+        })();
+      }
 
       function getUjianSiswa(kejuruan_id) {
         ujian = (function () {
@@ -236,9 +268,17 @@
       }
 
       $('#exam-panel-body').on("click", ".pilihan", function() {
-        console.log($(this).val());
-        console.log($('meta[name="csrf-token"]').attr('content'));
-        postJawabanSiswa(siswaCurrentId, $(this).val());
+        console.log("pilihan_id : "+$(this).val());
+        // console.log($('meta[name="csrf-token"]').attr('content'));
+        console.log("soal_id : "+$(this).data('soal'));
+        postJawabanSiswa(siswaCurrentId, $(this).val(), $(this).data('soal'));
+        // console.log($(this).not(this));
+        if ($(this).not(this).prop('checked', true)) {
+          console.log('true');
+        }
+        else {
+          console.log('false');
+        }
       });
 
       $('#search-siswa-input').keyup(function(){
@@ -253,7 +293,11 @@
       });
 
       $('#click-start').click(function() {
+        getSiswaPilihan(siswaCurrentId);
         $('#verification-panel').hide(1000, startExam(ujianSelected));
+        setInterval(update, 10);
+        $('#timer-navbar').show(1000);
+        console.log(siswaPilihan);
       });
 
       $('#exam-panel-body .panel .panel-body').on('')
@@ -274,10 +318,11 @@
           getPilihanSoal(_soal.id);
           $.each(pilihan, function(key, _pilihan) {
             $("#soal-"+_soal.id+" .panel-body").append(
-              '<div class="radio"><label><input type="radio" class="pilihan" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
+              '<div class="radio"><label><input id="pilihan-'+_pilihan.id+'" type="radio" class="pilihan" data-soal="'+_soal.id+'" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
             );
           });
         });
+        loadExistingAnswer();
       }
     });
   </script>
