@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use App\Jawaban;
 use App\Pilihan;
 use App\Soal;
 use App\Siswa;
@@ -39,38 +40,33 @@ class JawabanController extends Controller
      */
     public function store(Request $request)
     {
-        $pilihan = Pilihan::find($request->pilihan_id);
-
-        $siswa = Siswa::find($request->siswa_id);
-
-        $pilihans = Soal::find($request->soal_id)->pilihans;
-
-        // return $siswa;
-        // return $pilihan;
-        // return $siswa->pilihans;
-        // return $pilihans;
-        // return $siswa->pilihans->whereIn('id',$pilihans->pluck('id'))->pluck('id');
-
-
-
-        if ($siswa->pilihans->whereIn('id',$pilihans->pluck('id'))->isNotEmpty())
-        {
-          // $getPilihan = Pilihan::find($siswa->pilihans->whereIn('id',$pilihans->pluck('id')));
-
-          $siswa->pilihans()->detach($siswa->pilihans->whereIn('id',$pilihans->pluck('id'))->pluck('id'));
-
-          $siswa->pilihans()->attach($request->pilihan_id);
-
-
-          return 'exist';
-
-        } else {
-
-          $pilihan->siswas()->save($siswa);
-
-          return 'new';
-
+        $pilihan = null;
+        $jawabanCheck = Jawaban::all()->contains('siswa_id', $request->siswa_id);
+        $jawaban = Jawaban::where('siswa_id', $request->siswa_id);
+        $pilihanSoal = Pilihan::find($request->pilihan_id)->soal;
+        if ($pilihanSoal != null) {
+            $pilihan = Pilihan::where('soal_id', $pilihanSoal->id)->get();
+            $soalJawaban = Soal::find($pilihanSoal)->jawabans;
+            if ($pilihan->contains($request->pili)) {
+              # code...
+            }
         }
+        // $soal = Soal::find($pilihan)->pilihans;
+        // $jawabanSiswa = Siswa::find($request->siswa_id)->jawabans;
+        // $jawabanSoal = Jawaban::find($request->pilihan_id)->soal;
+
+        // return $soalJawaban->where('siswa_id', $request->siswa_id);
+        // return $jawabanSoal;
+        return $pilihan;
+        // return $soal;
+        // return $jawaban;
+        // return $jawabanSiswa;
+        // return Soal::whereIn('')
+        // return $soal->pluck('soal_id');
+    }
+
+    public function checkJawaban($pilihan, $pilihanSoal)
+    {
     }
 
     /**

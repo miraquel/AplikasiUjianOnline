@@ -48,7 +48,6 @@
                     <th>Nama Ujian</th>
                     <th>Tanggal Mulai</th>
                     <th>Tanggal Selesai</th>
-                    <th>Durasi</th>
                   </thead>
                   <tbody id="body-ujian">
                   </tbody>
@@ -96,7 +95,6 @@
 @section('js')
   <script type="text/javascript">
     $(document).ready(function(){
-      moment.locale('id');
       var siswaCurrentId;
       var siswaCurrentBirthDate;
       var ujian;
@@ -106,14 +104,6 @@
       var siswaPilihan;
 
       var ujianSelected;
-      var durasiUjian;
-
-      function update() {
-        if (durasiUjian > 0) {
-          durasiUjian = moment.duration(durasiUjian - 10, 'milliseconds');
-          $("#timer-navbar .clock").text("Waktu Tersisa : "+durasiUjian.hours()+":"+durasiUjian.minutes()+":"+durasiUjian.seconds()+":"+durasiUjian.milliseconds());
-        }
-      }
 
       function loadExistingAnswer() {
         $.each(siswaPilihan, function(key, val){
@@ -157,7 +147,7 @@
           $.ajax({
             'async': false,
             'global': false,
-            'url': 'http://localhost:8000/api/ujian/'+kejuruan_id+'/kejuruan',
+            'url': 'http://localhost:8000/api/ujian/'+kejuruan_id+'/siswa',
             'dataType': "json",
             'success': function (data) {
               ujian = data;
@@ -183,6 +173,22 @@
         })();
       }
 
+      // function getJawabanSoal(soal_id) {
+      //   jawaban = (function () {
+      //     var jawaban = null;
+      //     $.ajax({
+      //       'async': false,
+      //       'global': false,
+      //       'url': 'http://localhost:8000/api/jawaban/'+soal_id+'/soal',
+      //       'dataType': "json",
+      //       'success': function (data) {
+      //         jawaban = data;
+      //       }
+      //     });
+      //     return jawaban;
+      //   })();
+      // }
+
       function getPilihanSoal(soal_id) {
         pilihan = (function () {
           var pilihan = null;
@@ -205,7 +211,7 @@
           $('.div-verification').hide(1000);
           getUjianSiswa(siswaCurrentMajor);
           $.each(ujian, function(key, val){
-            $('#table-ujian > tbody').append('<tr class="tr-ujian"><td class="td-ujian-id" hidden>'+val.id+'</td><td class="td-ujian-deskripsi">'+val.deskripsi+'</td><td class="td-ujian-tanggal-mulai">'+val.tanggal_mulai+'</td><td class="td-ujian-tanggal-selesai">'+val.tanggal_selesai+'</td><td>'+moment.duration(val.durasi).hours()+' Jam '+moment.duration(val.durasi).minutes()+' Menit '+moment.duration(val.durasi).seconds()+' Detik </td>'+'<td class="td-ujian-durasi" hidden>'+val.durasi+'</td></tr>');
+            $('#table-ujian > tbody').append('<tr class="tr-ujian"><td class="td-ujian-id" hidden>'+val.id+'</id><td class="td-ujian-deskripsi">'+val.deskripsi+'</td><td class="td-ujian-tanggal-mulai">'+val.tanggal_mulai+'</td><td class="td-ujian-tanggal-selesai">'+val.tanggal_selesai+'</td></tr>');
           });
           $('#div-ujian').show(1000);
           console.log(ujian);
@@ -227,7 +233,6 @@
       $('#body-ujian').on("click", ".tr-ujian", function() {
         $(this).addClass("active");
         ujianSelected = $(this).find(".td-ujian-id").text();
-        durasiUjian = $(this).find(".td-ujian-durasi").text();
         if ($('#click-start').prop('disabled')) {
           $('#click-start').prop('disabled', false);
         }
@@ -238,7 +243,7 @@
         // console.log(siswaCurrentBirthDate);
       });
 
-      function postJawabanSiswa(siswa_id, pilihan_id, soal_id) {
+      function postJawabanSiswa(siswa_id, pilihan_id) {
         // console.log('siswa_id = '+siswa_id);
         // console.log('pilihan_id = '+pilihan_id);
         $.ajax({
@@ -249,8 +254,7 @@
           data: {
             _token: $('meta[name="csrf-token"]').attr('content'),
             siswa_id: siswa_id,
-            pilihan_id: pilihan_id,
-            soal_id: soal_id
+            pilihan_id: pilihan_id
           },
           type: "POST",
           dataType: "json",
@@ -295,6 +299,8 @@
         $('#timer-navbar').show(1000);
         console.log(siswaPilihan);
       });
+
+      $('#exam-panel-body .panel .panel-body').on('')
 
       function startExam(id) {
         console.log(id);

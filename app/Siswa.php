@@ -56,13 +56,13 @@ class Siswa extends Model
         return $this->belongsTo('App\Pekerjaan', 'pekerjaan_id');
     }
 
+    public function jawabans()
+    {
+        return $this->hasMany('App\Jawaban', 'siswa_id');
+    }
+
     public function users()
     {
         return $this->belongsTo('App\User', 'user_id');
-    }
-
-    public function pilihans()
-    {
-        return $this->belongsToMany('App\Pilihan')->withTimestamps();
     }
 }
