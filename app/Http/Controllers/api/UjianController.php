@@ -18,7 +18,7 @@ class UjianController extends Controller
         }
     }
 
-    public function getUjianSiswa($id)
+    public function getUjianKejuruan($id)
     {
         return $ujians = Ujian::where('kejuruan_id', $id)->get();
     }
