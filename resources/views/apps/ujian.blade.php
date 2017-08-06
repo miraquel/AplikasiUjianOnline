@@ -74,6 +74,7 @@
       <div id="exam-panel" class="panel panel-primary" hidden>
         <div class="panel-heading">
           Ujian Dimulai, Selamat Mengerjakan
+          Ujian Dimulai
         </div>
         <div id="exam-panel-body" class="panel-body">
 
