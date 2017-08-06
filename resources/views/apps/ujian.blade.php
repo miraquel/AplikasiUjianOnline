@@ -103,6 +103,8 @@
       var soal;
       var pilihan;
 
+      var siswaPilihan;
+
       var ujianSelected;
       var durasiUjian;
 
@@ -111,6 +113,12 @@
           durasiUjian = moment.duration(durasiUjian - 10, 'milliseconds');
           $("#timer-navbar .clock").text("Waktu Tersisa : "+durasiUjian.hours()+":"+durasiUjian.minutes()+":"+durasiUjian.seconds()+":"+durasiUjian.milliseconds());
         }
+      }
+
+      function loadExistingAnswer() {
+        $.each(siswaPilihan, function(key, val){
+          $("#pilihan-"+val.id).prop('checked', true);
+        });
       }
 
       var siswa = (function () {
@@ -126,6 +134,22 @@
         });
         return siswa;
       })();
+
+      function getSiswaPilihan(siswa_id) {
+        siswaPilihan = (function () {
+          var siswaPilihan = null;
+          $.ajax({
+            'async': false,
+            'global': false,
+            'url': 'http://localhost:8000/api/siswa/'+siswa_id+'/pilihan',
+            'dataType': "json",
+            'success': function (data) {
+              siswaPilihan = data;
+            }
+          });
+          return siswaPilihan;
+        })();
+      }
 
       function getUjianSiswa(kejuruan_id) {
         ujian = (function () {
@@ -244,6 +268,13 @@
         // console.log($('meta[name="csrf-token"]').attr('content'));
         console.log("soal_id : "+$(this).data('soal'));
         postJawabanSiswa(siswaCurrentId, $(this).val(), $(this).data('soal'));
+        // console.log($(this).not(this));
+        if ($(this).not(this).prop('checked', true)) {
+          console.log('true');
+        }
+        else {
+          console.log('false');
+        }
       });
 
       $('#search-siswa-input').keyup(function(){
@@ -258,9 +289,11 @@
       });
 
       $('#click-start').click(function() {
+        getSiswaPilihan(siswaCurrentId);
         $('#verification-panel').hide(1000, startExam(ujianSelected));
         setInterval(update, 10);
         $('#timer-navbar').show(1000);
+        console.log(siswaPilihan);
       });
 
       function startExam(id) {
@@ -279,10 +312,11 @@
           getPilihanSoal(_soal.id);
           $.each(pilihan, function(key, _pilihan) {
             $("#soal-"+_soal.id+" .panel-body").append(
-              '<div class="radio"><label><input type="radio" class="pilihan" data-soal="'+_soal.id+'" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
+              '<div class="radio"><label><input id="pilihan-'+_pilihan.id+'" type="radio" class="pilihan" data-soal="'+_soal.id+'" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
             );
           });
         });
+        loadExistingAnswer();
       }
     });
   </script>

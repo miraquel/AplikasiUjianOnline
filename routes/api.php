@@ -21,6 +21,7 @@ Route::get('/ujian', 'api\UjianController@index');
 Route::get('/soal/{id}/ujian', 'api\SoalController@getSoalUjian');
 Route::get('/ujian/{id}/kejuruan', 'api\UjianController@getUjianKejuruan');
 Route::get('/pilihan/{id}/soal', 'api\PilihanController@getPilihanSoal');
+Route::get('/siswa/{id}/pilihan', 'api\SiswaController@getSiswaPilihan');
 Route::get('/siswa', 'api\SiswaController@index');
 
 //Route::post('/ujian', 'api\UjianController@store');
