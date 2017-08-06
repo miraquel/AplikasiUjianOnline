@@ -73,6 +73,7 @@
       <div id="exam-panel" class="panel panel-primary" hidden>
         <div class="panel-heading">
           Ujian Dimulai
+          <label class="pull-right">Test</label>
         </div>
         <div id="exam-panel-body" class="panel-body">
 
@@ -131,7 +132,7 @@
           $.ajax({
             'async': false,
             'global': false,
-            'url': 'http://localhost:8000/api/soal/'+ujian_id+'/ujian',
+            'url': 'http://localhost:8000/api/soal/'+ujian_id+'/kejuruan',
             'dataType': "json",
             'success': function (data) {
               soal = data;
@@ -140,22 +141,6 @@
           return soal;
         })();
       }
-
-      // function getJawabanSoal(soal_id) {
-      //   jawaban = (function () {
-      //     var jawaban = null;
-      //     $.ajax({
-      //       'async': false,
-      //       'global': false,
-      //       'url': 'http://localhost:8000/api/jawaban/'+soal_id+'/soal',
-      //       'dataType': "json",
-      //       'success': function (data) {
-      //         jawaban = data;
-      //       }
-      //     });
-      //     return jawaban;
-      //   })();
-      // }
 
       function getPilihanSoal(soal_id) {
         pilihan = (function () {
@@ -211,7 +196,7 @@
         // console.log(siswaCurrentBirthDate);
       });
 
-      function postJawabanSiswa(siswa_id, pilihan_id) {
+      function postJawabanSiswa(siswa_id, pilihan_id, soal_id) {
         // console.log('siswa_id = '+siswa_id);
         // console.log('pilihan_id = '+pilihan_id);
         $.ajax({
@@ -222,7 +207,8 @@
           data: {
             _token: $('meta[name="csrf-token"]').attr('content'),
             siswa_id: siswa_id,
-            pilihan_id: pilihan_id
+            pilihan_id: pilihan_id,
+            soal_id: soal_id
           },
           type: "POST",
           dataType: "json",
@@ -236,9 +222,10 @@
       }
 
       $('#exam-panel-body').on("click", ".pilihan", function() {
-        console.log($(this).val());
-        console.log($('meta[name="csrf-token"]').attr('content'));
-        postJawabanSiswa(siswaCurrentId, $(this).val());
+        console.log("pilihan_id : "+$(this).val());
+        // console.log($('meta[name="csrf-token"]').attr('content'));
+        console.log("soal_id : "+$(this).data('soal'));
+        postJawabanSiswa(siswaCurrentId, $(this).val(), $(this).data('soal'));
       });
 
       $('#search-siswa-input').keyup(function(){
@@ -256,8 +243,6 @@
         $('#verification-panel').hide(1000, startExam(ujianSelected));
       });
 
-      $('#exam-panel-body .panel .panel-body').on('')
-
       function startExam(id) {
         console.log(id);
         $('#verification-panel').hide(1000);
@@ -274,7 +259,7 @@
           getPilihanSoal(_soal.id);
           $.each(pilihan, function(key, _pilihan) {
             $("#soal-"+_soal.id+" .panel-body").append(
-              '<div class="radio"><label><input type="radio" class="pilihan" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
+              '<div class="radio"><label><input type="radio" class="pilihan" data-soal="'+_soal.id+'" value="'+_pilihan.id+'" name="pilihan-soal-'+_soal.id+'">'+_pilihan.deskripsi+'</label></div>'
             );
           });
         });
