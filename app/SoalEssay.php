@@ -16,9 +16,9 @@ class SoalEssay extends Model
         return $this->belongsTo('App\Ujian', 'ujian_id');
     }
 
-    public function jawaban_essay()
+    public function siswas()
     {
-        return $this->hasMany('App\JawabanEssay', 'id');
+        return $this->belongsToMany('App\Siswa', 'soal_essay_siswa')->withTimestamps();
     }
 
 }

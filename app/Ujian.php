@@ -30,4 +30,9 @@ class Ujian extends Model
       return $this->hasMany('App\SoalEssay', 'id');
   }
 
+  public function siswas()
+  {
+      return $this->belongsToMany('App\Siswa', 'ujian_siswa')->withTimestamps();
+  }
+
 }
