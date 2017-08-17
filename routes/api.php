@@ -26,6 +26,7 @@ Route::get('/siswa/{id}/pilihan', 'api\SiswaController@getSiswaPilihan');
 Route::get('/siswa', 'api\SiswaController@index');
 
 //Route::post('/ujian', 'api\UjianController@store');
+Route::post('/soal_essay/siswa/nilai', 'api\SoalEssayController@postNilaiEssaySiswa');
 Route::post('/ujian/siswa', 'api\UjianController@postUjianSiswa');
 Route::post('/soal_essay/siswa', 'api\SoalEssayController@postJawabanEssaySiswa');
 Route::resource('/jawaban', 'api\JawabanController');

@@ -29,6 +29,9 @@ Route::group(['middleware' => ['instruktur', 'auth']], function()
     Route::resource('/status', 'StatusController');
     Route::resource('/siswa', 'SiswaController');
     Route::get('/ujian/{ujian}/soal_pg/', 'UjianController@editSoal');
+    Route::get('/ujian/{ujian}/jawaban/', 'UjianController@evaluasiJawaban');
+    Route::get('/siswa/{essay}/essay/{ujian}/ujian', 'UjianController@evaluasiEssay');
+    Route::get('/print/{ujian}/ujian', 'PrintController@print');
     Route::resource('/ujian', 'UjianController');
     Route::resource('/soal', 'SoalController');
     Route::resource('/soal_essay', 'SoalEssayController');

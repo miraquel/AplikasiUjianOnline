@@ -23,7 +23,6 @@
                     <th>Tanggal Mulai</th>
                     <th>Tanggal Selesai</th>
                     <th>Durasi</th>
-                    <th>&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -34,18 +33,19 @@
                       <td>{{ $ujian->tanggal_mulai }}</td>
                       <td>{{ $ujian->tanggal_selesai }}</td>
                       <td class="durasi">{{ $ujian->durasi }}</td>
-                      <td>
-                        <div class="pull-right">
-                          <a href="{{ url('ujian/'.$ujian->id.'/soal_pg') }}" class="btn btn-primary btn-sm" type="button">@fa(edit) Edit Data Soal</a>
-                          <a href="{{ route('ujian.show', $ujian->id) }}" class="btn btn-primary btn-sm" type="button">@fa(table) Detail</a>
-                          <a href="{{ route('ujian.edit', $ujian->id) }}" class="btn btn-warning btn-sm" type="button">@fa(pencil) Edit</a>
-                          <div class="box-button">
-                            <form action="{{ route('ujian.destroy', $ujian->id) }}" method="post">
-                                <input type="hidden" name="_method" value="DELETE">
-                                {{ csrf_field() }}
-                                <a href="{{ route('ujian.destroy', $ujian->id) }}" class="btn btn-danger btn-sm">@fa(trash) Delete</a>
-                            </form>
-                          </div>
+                    </tr>
+                    <tr>
+                      <td colspan="5">
+                        <a href="{{ url('ujian/'.$ujian->id.'/soal_pg') }}" class="btn btn-primary btn-sm pull-right" type="button">@fa(edit) Edit Data Soal</a>
+                        <a href="{{ url('ujian/'.$ujian->id.'/jawaban') }}" style="margin-right:5px" class="btn btn-primary btn-sm pull-right" type="button">@fa(edit) Evaluasi Jawaban Siswa</a>
+                        <a href="{{ route('ujian.show', $ujian->id) }}" class="btn btn-primary btn-sm" type="button">@fa(table) Detail</a>
+                        <a href="{{ route('ujian.edit', $ujian->id) }}" class="btn btn-warning btn-sm" type="button">@fa(pencil) Edit</a>
+                        <div class="box-button">
+                          <form action="{{ route('ujian.destroy', $ujian->id) }}" method="post">
+                              <input type="hidden" name="_method" value="DELETE">
+                              {{ csrf_field() }}
+                              <a href="{{ route('ujian.destroy', $ujian->id) }}" class="btn btn-danger btn-sm">@fa(trash) Delete</a>
+                          </form>
                         </div>
                       </td>
                     </tr>

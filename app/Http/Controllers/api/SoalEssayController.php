@@ -29,8 +29,16 @@ class SoalEssayController extends Controller
         }
         else
         {
-          $soalEssay->siswas()->save($siswa, ['jawaban' => $request->jawaban]);
+          $soalEssay->siswas()->save($siswa, ['nilai' => 0, 'jawaban' => $request->jawaban]);
         }
+        return $soalEssay->siswas;
+    }
+
+    public function postNilaiEssaySiswa(Request $request)
+    {
+        $soalEssay = SoalEssay::findOrFail($request->soal_essay_id);
+        $siswa = Siswa::findOrFail($request->siswa_id);
+        $soalEssay->siswas()->updateExistingPivot($request->siswa_id, ['nilai' => $request->nilai]);
         return $soalEssay->siswas;
     }
 }

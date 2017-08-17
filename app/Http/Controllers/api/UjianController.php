@@ -39,7 +39,7 @@ class UjianController extends Controller
         else {
             $ujian->siswas()->save($siswa);
         }
-        return $siswa->ujians->first()->pivot;
+        return $siswa->ujians->where('id', $request->ujian_id)->first()->pivot;
         // return $ujian->siswas;
     }
 }
