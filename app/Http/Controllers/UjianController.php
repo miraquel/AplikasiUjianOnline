@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Http\Controllers;
@@ -8,6 +9,7 @@ use App\Soal;
 use App\SoalEssay;
 use App\Siswa;
 use App\Pilihan;
+use Redirect;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -75,8 +77,9 @@ class UjianController extends Controller
   public function edit($id)
   {
       $ujians = Ujian::findOrFail($id);
-      //return $ujian;
-      return view('manajemen_soal.ujian.edit', compact('ujians'));
+      $kejuruans = Kejuruan::all();
+      // return $ujians;
+      return view('manajemen_soal.ujian.edit', compact('ujians','kejuruans'));
   }
 
   public function editSoal($id)
@@ -100,19 +103,60 @@ class UjianController extends Controller
       $soals = Soal::all()->where('ujian_id', $id);
       $pilihans = Pilihan::all()->whereIn('soal_id', $soals->pluck('id')->toArray());
       $soalEssays = SoalEssay::all()->where('ujian_id', $id);
-      $siswas = Siswa::all();
       $ujian = Ujian::findOrFail($id);
+      $siswas = Siswa::all()->where('kejuruan_id', $ujian->kejuruans->id);
+      // return $soals->count();
+      // return $ujian;
 
       foreach ($siswas as $key => $siswa) {
         $benarPG = $siswa->pilihans->whereIn('pivot.pilihan_id', $pilihans->pluck('id'))->where('benar', 1)->count();
-        $nilaiPG = ($benarPG / $soals->count()) * 100;
+        if ($soals->count() > 0) {
+          $nilaiPG = ($benarPG / $soals->count()) * 100;
+        }
+        else {
+          $nilaiPG = 0;
+        }
         $siswa->nilai_pilihan_ganda = $nilaiPG;
 
         $benarEssay = $siswa->soalEssays->where('ujian_id', $id)->pluck('pivot.nilai')->sum();
-        $nilaiEssay = $benarEssay / $soalEssays->count();
+        if ($soalEssays->count() > 0) {
+          $nilaiEssay = $benarEssay / $soalEssays->count();
+        }
+        else {
+          $nilaiEssay = 0;
+        }
         $siswa->nilai_essay = $nilaiEssay;
 
         $siswa->nilai_akhir = ($nilaiPG * 60/100) + ($nilaiEssay * 40/100);
+
+        if ($siswa->nilai_akhir >= 80) {
+          $siswa->grade = "A";
+          $siswa->status = "LULUS";
+        }
+        else if ($siswa->nilai_akhir >= 75) {
+          $siswa->grade = "B+";
+          $siswa->status = "LULUS";
+        }
+        else if ($siswa->nilai_akhir >= 70) {
+          $siswa->grade = "B";
+          $siswa->status = "LULUS";
+        }
+        else if ($siswa->nilai_akhir >= 65) {
+          $siswa->grade = "C+";
+          $siswa->status = "LULUS";
+        }
+        else if ($siswa->nilai_akhir >= 60) {
+          $siswa->grade = "C";
+          $siswa->status = "LULUS";
+        }
+        else if ($siswa->nilai_akhir >= 50) {
+          $siswa->grade = "D";
+          $siswa->status = "TIDAK LULUS";
+        }
+        else {
+          $siswa->grade = "E";
+          $siswa->status = "TIDAK LULUS";
+        }
       }
 
       // return $siswas;
@@ -138,7 +182,7 @@ class UjianController extends Controller
   {
       $ujians = Ujian::findOrFail($id);
       $ujians->update($request->all());
-      return Redirect::route('manajemen_soal.ujian.index');
+      return Redirect::route('ujian.index');
   }
 
   /**

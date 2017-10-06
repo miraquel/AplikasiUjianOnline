@@ -46,3 +46,5 @@ Route::group(['middleware' => ['admin', 'auth']], function()
 });
 
 Route::get('/apps/ujian', 'AppsController@index');
+
+Route::get('/apps/ujian/{ujian_id}/siswa/{siswa_id}/selesai', 'AppsController@selesai');

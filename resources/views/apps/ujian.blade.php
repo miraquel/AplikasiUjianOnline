@@ -87,6 +87,7 @@
           <button class="btn btn-success" type="button" name="button">Button Kirim</button>
         </div>
       </div>
+
       <div id="timer-navbar" class="navbar navbar-inverse navbar-fixed-bottom" hidden>
         <div class="container">
           <div class="navbar-text">
@@ -95,6 +96,7 @@
           <button id="btn-selesai-ujian" type="button" style="font-size:20pt;" class="navbar-btn btn-success btn pull-right">Selesai</button>
         </div>
       </div>
+
   </div>
 @endsection
 
@@ -127,8 +129,7 @@
         }
         else {
           clearInterval(interval);
-          $('#exam-panel').hide(1000);
-          $('#btn-selesai-ujian').prop('disabled');
+          postUjianSiswaSelesai(siswaCurrentId, ujianSelected);
         }
       }
 
@@ -236,9 +237,11 @@
         loadUjianSiswa();
       });
 
-      // $('#btn-selesai-ujian').click(function() {
-      //
-      // })
+      $('#btn-selesai-ujian').click(function() {
+        postUjianSiswaSelesai(siswaCurrentId, ujianSelected);
+        // console.log(siswaCurrentId);
+        // console.log(ujianSelected);
+      })
 
       function loadUjianSiswa() {
           $('#table-ujian > tbody').empty();
@@ -361,7 +364,31 @@
             _jamMulai = moment(data.created_at);
             jamMulai = _jamMulai.add(durasiUjian);
             jamSelesai = moment(jamMulai);
+            interval = setInterval(update, 10);
             // var totalDurasi = jamSelesai.diff(now, 'milliseconds');
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+      }
+
+      function postUjianSiswaSelesai(siswa_id, ujian_id) {
+        $.ajax({
+          url: 'http://localhost:8000/api/ujian/siswa/selesai',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            siswa_id: siswa_id,
+            ujian_id: ujian_id
+          },
+          type: "POST",
+          dataType: "json",
+          success: function(data) {
+            window.location.href = 'http://localhost:8000/apps/ujian/'+ujianSelected+'/siswa/'+siswaCurrentId+'/selesai';
+            console.log(data);
           },
           error: function(data) {
             console.log(data);
@@ -434,9 +461,8 @@
         console.log(siswaCurrentId);
         console.log(ujianSelected);
         postUjianSiswa(ujianSelected, siswaCurrentId);
-        $('#verification-panel').hide(1000, startExam(ujianSelected));
         clearInterval(intervalListUjian);
-        interval = setInterval(update, 10);
+        $('#verification-panel').hide(1000, startExam(ujianSelected));
         $('#timer-navbar').show(1000);
         console.log(siswaPilihan);
       });
