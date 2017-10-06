@@ -132,8 +132,6 @@
     <script src="{{ asset('js/jquery-3.2.0.min.js') }}"></script>
     <script src="{{ asset('jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
-    <script src="{{ asset('js/velocity.min.js') }}"></script>
-    <script src="{{ asset('js/velocity.ui.js') }}"></script>
     @yield('js')
 </body>
 </html>

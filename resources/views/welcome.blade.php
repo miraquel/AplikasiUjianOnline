@@ -9,8 +9,6 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <link href="{{ asset('font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -43,8 +41,8 @@
 
             .top-right {
                 position: absolute;
-                right: 20px;
-                top: 30px;
+                right: 10px;
+                top: 18px;
             }
 
             .content {
@@ -58,24 +56,16 @@
 
             .links > a {
                 color: #ffffff;
-                border-radius: 25px;
-                padding: 10px 25px;
-                margin-right: 10px;
-                background-color: rgba(255, 255, 255, 0.51);
-                font-size: 15px;
+                padding: 0 25px;
+                font-size: 12px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
             }
 
-            .links-bottom > a {
-                font-size: 30px;
-                margin-right: 10px;
-            }
-
             .m-b-md {
-                margin-bottom: 20px;
+                margin-bottom: 30px;
             }
         </style>
     </head>
@@ -100,13 +90,11 @@
                     Balai Latihan Kerja Industri
                     <br>
                     <small>Provinsi Banten</small>
-                    <br>
-                    <a class="btn btn-primary btn-block" style="font-size:30px;text-shadow:none" href="{{ url('/apps/ujian') }}">Aplikasi Ujian BLKI @fa(file-text-o)</a>
                 </div>
 
-                <div class="links-bottom">
-                    <a class="btn btn-primary" href="{{ url('/home') }}">Halaman Utama</a>
-                    <a class="btn btn-primary" href="{{ url('/home') }}">Profil BLKI</a>
+                <div class="links">
+                    <a href="{{ url('/home') }}">Halaman Utama</a>
+                    <a href="#">Tentang</a>
                 </div>
             </div>
         </div>

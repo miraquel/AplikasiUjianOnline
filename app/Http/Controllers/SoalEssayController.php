@@ -14,8 +14,7 @@ class SoalEssayController extends Controller
      */
     public function index()
     {
-      $soals = SoalEssay::all();
-      return view('manajemen_soal.soal.index', compact('soals'));
+        //
     }
 
     /**
@@ -36,9 +35,7 @@ class SoalEssayController extends Controller
      */
     public function store(Request $request)
     {
-        SoalEssay::create($request->all());
-        //$no = $request->input('ujian_id');
-        return redirect('ujian/'.$request->input('ujian_id').'/soal_pg');
+        //
     }
 
     /**
@@ -47,7 +44,7 @@ class SoalEssayController extends Controller
      * @param  \App\SoalEssay  $soalEssay
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(SoalEssay $soalEssay)
     {
         //
     }
@@ -58,7 +55,7 @@ class SoalEssayController extends Controller
      * @param  \App\SoalEssay  $soalEssay
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SoalEssay $soalEssay)
     {
         //
     }
@@ -70,7 +67,7 @@ class SoalEssayController extends Controller
      * @param  \App\SoalEssay  $soalEssay
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SoalEssay $soalEssay)
     {
         //
     }
@@ -81,10 +78,8 @@ class SoalEssayController extends Controller
      * @param  \App\SoalEssay  $soalEssay
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(SoalEssay $soalEssay)
     {
-        $soalEssay = SoalEssay::findOrFail($id);
-        $soalEssay->delete();
-        return redirect('ujian/'.$request->input('ujian_id').'/soal_pg');
+        //
     }
 }
