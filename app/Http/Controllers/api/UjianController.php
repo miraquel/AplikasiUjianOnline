@@ -39,7 +39,16 @@ class UjianController extends Controller
         else {
             $ujian->siswas()->save($siswa);
         }
-        return $siswa->ujians->first()->pivot;
+        return $siswa->ujians->where('id', $request->ujian_id)->first()->pivot;
         // return $ujian->siswas;
+    }
+
+    public function postUjianSiswaSelesai(Request $request)
+    {
+      $ujian = Ujian::find($request->ujian_id);
+      $siswa = Siswa::find($request->siswa_id);
+
+      return $siswa->ujians()->updateExistingPivot($ujian->id, ['selesai' => 1]);
+      // return $ujian->siswas;
     }
 }

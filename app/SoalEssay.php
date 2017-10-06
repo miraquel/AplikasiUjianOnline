@@ -18,7 +18,7 @@ class SoalEssay extends Model
 
     public function siswas()
     {
-        return $this->belongsToMany('App\Siswa', 'soal_essay_siswa')->withTimestamps();
+        return $this->belongsToMany('App\Siswa', 'soal_essay_siswa')->withPivot('jawaban')->withPivot('nilai')->withTimestamps();
     }
 
 }

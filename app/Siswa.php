@@ -21,6 +21,34 @@ class Siswa extends Model
         'user_id',
     ];
 
+    // protected $appends = ['nilai_pilihan_ganda', 'nilai_essay'];
+    //
+    // public function getNilaiPilihanGandaAttribute()
+    // {
+    //     if ($this->attributes['nilai_pilihan_ganda'] = null) {
+    //       return $this->attributes['nilai_pilihan_ganda'] = null;
+    //     }
+    //     return $this->attributes['nilai_pilihan_ganda'];
+    // }
+    //
+    // public function setNilaiPilihanGandaAttribute($value)
+    // {
+    //     return $this->attributes['nilai_pilihan_ganda'] = $value;
+    // }
+    //
+    // public function getNilaiEssayAttribute()
+    // {
+    //     if ($this->attributes['nilai_essay'] = null) {
+    //         return $this->attributes['nilai_essay'] = null;
+    //     }
+    //     return $this->attributes['nilai_essay'];
+    // }
+    //
+    // public function setNilaiEssayAttribute($value)
+    // {
+    //     return $this->attributes['nilai_essay'] = $value;
+    // }
+
     //One to Many Relationship with agama's table
     public function agamas()
     {
@@ -73,6 +101,6 @@ class Siswa extends Model
 
     public function soalEssays()
     {
-        return $this->belongsToMany('App\SoalEssay', 'soal_essay_siswa')->withPivot('jawaban')->withTimestamps();
+        return $this->belongsToMany('App\SoalEssay', 'soal_essay_siswa')->withPivot('jawaban')->withPivot('nilai')->withTimestamps();
     }
 }

@@ -18,7 +18,7 @@
             <div class="panel panel-warning">
                 <div class="panel-heading">
                     <label>Ujian yang akan berlangsung</label>
-                    <label class="pull-right">Tanggal : {{ $today }}, {{ $clock }}</label>
+                    <label class="pull-right clock-now">Loading...</label>
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped">
@@ -54,4 +54,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+  <script>
+    moment.locale("id");
+    $(document).ready(function() {
+
+      function update() {
+        $('.clock-now').text(moment().format("dddd, DD MMMM YYYY, h:mm:ss"));
+      }
+
+      setInterval(update, 1000);
+  
+    });
+  </script>
 @endsection

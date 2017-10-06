@@ -14,13 +14,8 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-md-12">
-                <div class="alert alert-info">
+                <div id="label-verification" class="alert alert-info">
                   <strong>Verifikasi Data Anda!</strong> pilih nama anda pada table dibawah. kemudian, input tanggal lahir anda pada isian tanggal lahir
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="alert aler">
-
                 </div>
               </div>
               <div class="col-md-12 div-verification">
@@ -92,6 +87,7 @@
           <button class="btn btn-success" type="button" name="button">Button Kirim</button>
         </div>
       </div>
+
       <div id="timer-navbar" class="navbar navbar-inverse navbar-fixed-bottom" hidden>
         <div class="container">
           <div class="navbar-text">
@@ -100,6 +96,7 @@
           <button id="btn-selesai-ujian" type="button" style="font-size:20pt;" class="navbar-btn btn-success btn pull-right">Selesai</button>
         </div>
       </div>
+
   </div>
 @endsection
 
@@ -127,13 +124,12 @@
         var sekarang = moment();
         if (sekarang.isBefore(jamSelesai)) {
           hitungWaktuUjian = moment.duration(jamSelesai.diff(sekarang, 'milliseconds'));
-          // console.log(hitungWaktuUjian);
+          console.log("test");
           $("#timer-navbar .clock").text("Waktu Tersisa : "+hitungWaktuUjian.hours()+":"+hitungWaktuUjian.minutes()+":"+hitungWaktuUjian.seconds()+":"+hitungWaktuUjian.milliseconds());
         }
         else {
           clearInterval(interval);
-          $('#exam-panel').hide(1000);
-          $('#btn-selesai-ujian').prop('disabled');
+          postUjianSiswaSelesai(siswaCurrentId, ujianSelected);
         }
       }
 
@@ -241,9 +237,11 @@
         loadUjianSiswa();
       });
 
-      // $('#btn-selesai-ujian').click(function() {
-      //
-      // })
+      $('#btn-selesai-ujian').click(function() {
+        postUjianSiswaSelesai(siswaCurrentId, ujianSelected);
+        // console.log(siswaCurrentId);
+        // console.log(ujianSelected);
+      })
 
       function loadUjianSiswa() {
           $('#table-ujian > tbody').empty();
@@ -261,17 +259,46 @@
 
       $('#button-verification').click(function() {
         if (siswaCurrentBirthDate == $('#tanggal-lahir-verification').val()) {
-          $('.div-verification').velocity("transition.slideRightOut", 500);
-          $('#label-verification').velocity("transition.expandIn")
-            .velocity("callout.swing",500)
-            .text('Verifikasi Data Sukses');
+          $('#label-verification')
+            .velocity(
+              {
+                opacity: 0
+              },
+              {
+                duration: 500,
+                complete: function() {
+                  $('#label-verification')
+                    .removeClass('alert-info alert-danger')
+                    .addClass('alert-success')
+                    .html("<strong>Verifikasi Data Sukses!</strong> Silahkan pilih ujian yang ingin anda ikuti")
+                    .velocity("transition.fadeIn");
+                  $('.div-verification').velocity("transition.fadeOut",300);
+                  $('#div-ujian').velocity("transition.fadeIn",300);
+                }
+              }
+            );
+          //$.Velocity.RunSequence(loadingSequence);
           loadUjianSiswa();
           intervalListUjian = setInterval(loadUjianSiswa,10000);
-          $('#div-ujian').velocity("transition.slideLeftIn",500);
           console.log(ujian);
         }
         else {
-          $('#label-verification').show().text('Verifikasi Data Gagal');
+          $('#label-verification')
+            .velocity(
+              {
+                opacity: 0
+              },
+              {
+                duration: 200,
+                complete: function() {
+                  $('#label-verification')
+                    .removeClass('alert-info')
+                    .addClass('alert-danger')
+                    .html("<strong>Verifikasi Data Gagal!</strong> Pastikan nama anda sesuai dengan tanggal lahir yang anda masukkan")
+                    .velocity("transition.fadeIn");
+                }
+              }
+            );
         }
       })
 
@@ -334,13 +361,72 @@
           type: "POST",
           dataType: "json",
           success: function(data) {
-            _jamMulai = moment(data.tanggal_mulai);
+            _jamMulai = moment(data.created_at);
             jamMulai = _jamMulai.add(durasiUjian);
             jamSelesai = moment(jamMulai);
+            interval = setInterval(update, 10);
             // var totalDurasi = jamSelesai.diff(now, 'milliseconds');
           },
           error: function(data) {
             console.log(data);
+          }
+        });
+      }
+
+      function postUjianSiswaSelesai(siswa_id, ujian_id) {
+        $.ajax({
+          url: 'http://localhost:8000/api/ujian/siswa/selesai',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            siswa_id: siswa_id,
+            ujian_id: ujian_id
+          },
+          type: "POST",
+          dataType: "json",
+          success: function(data) {
+            window.location.href = 'http://localhost:8000/apps/ujian/'+ujianSelected+'/siswa/'+siswaCurrentId+'/selesai';
+            console.log(data);
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+      }
+
+      function postSoalEssaySiswa(soal_essay_id, siswa_id, jawaban) {
+        $.ajax({
+          url: 'http://localhost:8000/api/soal_essay/siswa',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            soal_essay_id: soal_essay_id,
+            siswa_id: siswa_id,
+            jawaban: jawaban
+          },
+          type: "POST",
+          dataType: "json",
+          success: function(data) {
+            $('#soal-essay-'+soal_essay_id)
+              .removeClass("panel-default panel-danger")
+              .addClass("panel-success");
+            $('#soal-essay-'+soal_essay_id)
+              .find('.label-status-kirim-essay')
+              .addClass('label label-success')
+              .text('Jawaban Sukses Terkirim!');
+          },
+          error: function(data) {
+            $('#soal-essay-'+soal_essay_id)
+              .removeClass("panel-default panel-success")
+              .addClass("panel-danger");
+            $('#soal-essay-'+soal_essay_id)
+              .find('.label-status-kirim-essay')
+              .addClass('label label-danger')
+              .text('Jawaban Gagal Terkirim!');
           }
         });
       }
@@ -375,12 +461,18 @@
         console.log(siswaCurrentId);
         console.log(ujianSelected);
         postUjianSiswa(ujianSelected, siswaCurrentId);
-        $('#verification-panel').hide(1000, startExam(ujianSelected));
         clearInterval(intervalListUjian);
-        interval = setInterval(update, 10);
+        $('#verification-panel').hide(1000, startExam(ujianSelected));
         $('#timer-navbar').show(1000);
         console.log(siswaPilihan);
       });
+
+      $('#exam-panel-body').on('click', '.kirim-essay', function () {
+        var soal_essay_id = $(this).data('essay');
+        var siswa_id = siswaCurrentId;
+        var jawaban = $('#jawaban-essay-'+$(this).data('essay')).val();
+        postSoalEssaySiswa(soal_essay_id, siswaCurrentId, jawaban);
+      })
 
       function startExam(id) {
         console.log(id);
@@ -414,7 +506,8 @@
                 </div>\
               </div>\
               <div class="panel-footer">\
-                <button data-soal-essay="'+val.id+'" class="btn btn-success kirim-essay">Kirim</button>\
+                <button data-essay="'+val.id+'" class="btn btn-success kirim-essay">Kirim</button>\
+                <label class=label-status-kirim-essay></label>\
               <div>\
             </div>'
           );

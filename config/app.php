@@ -169,6 +169,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         //Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
 
 
         /*
@@ -233,6 +234,8 @@ return [
         //'Sentinel' => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 
