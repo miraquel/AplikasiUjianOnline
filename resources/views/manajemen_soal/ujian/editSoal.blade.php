@@ -41,9 +41,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                          $incrementNoSoal = $soals->count()+1;
+                        @endphp
                         @foreach ($soals as $key => $soal)
                             <tr data-toggle="collapse" data-target="#demo_{{ $key+1 }}">
-                                <td>{{ $key+1 }}</td>
+                                <td>{{ $incrementNoSoal-1 }}</td>
                                 <td>{{ $soal->deskripsi }}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="collapse" data-target="#demo_{{ $key+1 }}">Pilihan Ganda</button>
@@ -127,6 +130,55 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            Soal Essay
+          </div>
+          <div class="panel-body">
+            <h4>Tambahkan soal Essay yang ingin diujikan</h4>
+            <form class="form-horizontal" action="{{ route('soal_essay.store') }}" method="post">
+                {{ csrf_field() }}
+                <input type="hidden" name="ujian_id" value="{{ $ujians->id }}">
+                <div class="form-group">
+                    <label class="control-label col-md-1" for="deskripsi">Pertanyaan</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="deskripsi" id="deskripsi" placeholder="Tuliskan pertanyaan dari soal disini">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-success pull-left">@fa(paper-plane) Simpan</button>
+                    </div>
+                </div>
+            </form>
+            <table class="table table-stripped">
+              <thead>
+                <tr>
+                  <th class="text-center">No. Soal</th>
+                  <th>Pertanyaan</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($soalEssays as $key => $soalEssay)
+                  <tr>
+                    <td class="col-md-1 text-center">{{ $key+1 }}</td>
+                    <td>{{ $soalEssay->deskripsi }}</td>
+                    <td class="col-md-2">
+                      <div class="box-button">
+                        <form action="{{ route('soal_essay.destroy', $soalEssay->id) }}" method="post">
+                          <input type="hidden" name="ujian_id" value="{{ $ujians->id }}">
+                          <input type="hidden" name="_method" value="DELETE">
+                          {{ csrf_field() }}
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                      </div>
+                      <a href="{{ route('soal_essay.edit', $soalEssay->id) }}" class="btn btn-warning">Edit</a>
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
         </div>
     </div>
 @endsection

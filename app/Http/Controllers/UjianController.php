@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ujian;
 use App\Kejuruan;
 use App\Soal;
+use App\SoalEssay;
 use App\Pilihan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -81,14 +82,15 @@ class UjianController extends Controller
   {
       $ujians = Ujian::findOrFail($id);
       $soals = Soal::all();
-      $soals = $soals->where('ujian_id', $id);
+      $soals = $soals->where('ujian_id', $id)->sortByDesc('id');
       $soal_ids = $soals->pluck('id');
       $soal_ids = $soal_ids->toArray();
       $pilihans = Pilihan::all();
       $pilihans = $pilihans->whereIn('soal_id', $soal_ids);
+      $soalEssays = SoalEssay::all()->where('ujian_id', $id);
 
       //return $pilihans;
-      return view('manajemen_soal.ujian.editSoal', compact('ujians','soals','pilihans'));
+      return view('manajemen_soal.ujian.editSoal', compact('ujians','soals','pilihans','soalEssays'));
   }
 
   /**

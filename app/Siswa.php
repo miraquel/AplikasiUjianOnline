@@ -65,4 +65,14 @@ class Siswa extends Model
     {
         return $this->belongsToMany('App\Pilihan')->withTimestamps();
     }
+
+    public function ujians()
+    {
+        return $this->belongsToMany('App\Ujian', 'ujian_siswa')->withTimestamps();
+    }
+
+    public function soalEssays()
+    {
+        return $this->belongsToMany('App\SoalEssay', 'soal_essay_siswa')->withPivot('jawaban')->withTimestamps();
+    }
 }
