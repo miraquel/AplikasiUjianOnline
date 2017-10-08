@@ -1,3 +1,5 @@
+<img src="https://imgur.com/a/44TvB">
+
 ## Instalasi
 
 Untuk memasang aplikasi ini, ikuti langkah-langkah yang ada dibawah ini :
@@ -5,7 +7,7 @@ Untuk memasang aplikasi ini, ikuti langkah-langkah yang ada dibawah ini :
 ### Untuk Windows
 
 - Buka CMD (Command Prompt)
-- Masukkan perintah berikut pada CMD, 
+- Masukkan perintah berikut pada CMD,
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
