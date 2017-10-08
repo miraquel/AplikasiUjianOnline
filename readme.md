@@ -1,21 +1,21 @@
-<blockquote class="imgur-embed-pub" lang="en" data-id="nBOsX5x"><a href="//imgur.com/nBOsX5x">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<p align="center">
+<img src="https://i.imgur.com/nBOsX5x.jpg" width="250" align="center">
+<br>
+<h1 align="center">Aplikasi Ujian BLKI Provinsi Banten</h1>
+</p>
 
 ## Instalasi
 
 Untuk memasang aplikasi ini, ikuti langkah-langkah yang ada dibawah ini :
 
-### Untuk Windows
-
-- Buka CMD (Command Prompt)
-- Masukkan perintah berikut pada CMD,
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Buka CLI
+  - Untuk Windows, bisa menggunakan CMD
+  - Untuk Linux, bisa menggunakan Terminal
+- Pilih lokasi untuk install aplikasi
+- Masukkan perintah `git clone https://github.com/miraquel/AplikasiUjianBLKI`
+- masuk ke folder AplikasiUjianBLKI dengan memasukan perintah `cd AplikasiUjianBLKI` pada CMD
+- masukan perintah `composer install`, tunggu hingga semua file berhasil di download
+- 
 
 Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
 
