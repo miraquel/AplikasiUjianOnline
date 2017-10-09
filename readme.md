@@ -18,3 +18,43 @@ Untuk memasang aplikasi ini, ikuti langkah-langkah yang ada dibawah ini :
 - rubah nama file .env.example menjadi .env dengan memasukan perintah :
   - Untuk Windows, `copy .env.example .env`
   - Untuk Linux, `cp .env.example .env`
+
+## Halaman Utama
+
+<img src="https://i.imgur.com/eVja0xB.jpg">
+
+## Halaman Login (Pengajar)
+
+<img src="https://imgur.com/T3NEXrI.jpg">
+
+## Menu Pengajar
+
+<img src="https://imgur.com/BRnCdDA.jpg">
+
+## Edit Data Soal (Pilihan Ganda)
+
+<img src="https://imgur.com/jnUL0AI.jpg">
+
+## Evaluasi Jawaban Siswa
+
+<img src="https://imgur.com/34wyggX.jpg">
+
+## Evaluasi Soal Essay Siswa
+
+<img src="https://imgur.com/SLyWKSg.jpg">
+
+## Verifikasi Data Siswa
+
+<img src="https://imgur.com/yma9p56.jpg">
+
+## Pilih Ujian
+
+<img src="https://imgur.com/SMWfcuW.jpg">
+
+## Ujian (Pilihan Ganda)
+
+<img src="https://imgur.com/zRWoECo.jpg">
+
+## Ujian (Essay)
+
+<img src="https://imgur.com/7xgXMnV.jpg">
